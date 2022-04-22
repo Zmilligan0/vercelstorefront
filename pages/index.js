@@ -1,18 +1,12 @@
 import PageTitle from "../components/PageTitle/PageTitle";
 import ProductCard from "../components/ProductCard/ProductCard";
- 
- 
- /* 
-         Product Card
-         SSG: Static Site Generation  Pages of HTML + CSS ---------------->edge --->really fast load time.
-                                      Pages of HTML + CSS ----------------> CDN ----> really fast load time
- */
 
-export default function Home(props) {
-   const products = props.products
-   
-           
+import {loadStripe} from "@stripe/stripe-js"
  
+export default function Home(props) {
+  const products = props.products
+           
+  const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
   return (
      <>
      <PageTitle title="StoreFront" tagline="featured products"/> 
@@ -24,16 +18,10 @@ export default function Home(props) {
      )
 }
  
-// Next sees getStaticProps your telling it to build static
-// pages from the data...
-// getStaticProps is server code....
-// application logic inside nextjs framework.
-// api routes ....pass data from the client strip make payment.....
+
 
 export async function getStaticProps(){
-  // express and nodejs
-  // fetch data from the api. Node.... fetch 
-  // Node vs JS   node doesn have any of the web apis....fetch
+  
   const res = await fetch('https://zachstorefront-default-rtdb.firebaseio.com/products.json')
   const productData = await res.json();
   const products = Object.values(productData)

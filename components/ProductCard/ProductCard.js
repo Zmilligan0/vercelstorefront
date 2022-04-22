@@ -3,8 +3,9 @@ import Image from 'next/image'
 import {productCard, price, name, description} from './styles.module.scss'
 
 function ProductCard ({children, product, ...props})  {
-  const {productName, productPrice, productDesc, imageUrl}= {...product}
+  const {productName, productPrice, productDesc, imageUrl, uid}= {...product}
   return (
+
        <aside className={productCard}>
          <header>
             <Image
@@ -19,10 +20,10 @@ function ProductCard ({children, product, ...props})  {
           <p className={price}>${productPrice}</p>
           <p className={description}>{productDesc}</p>
           <footer>
-            <form action="#" method="POST">
-              <input type="hidden" name="uid" value="uid"/>
-              <button type="submit">Buy Now</button>
-            </form>
+          <form action="/api/checkout" method="POST">
+        <input type="hidden" name="uid" value={uid}/>
+        <button type="submit">Buy Now</button>
+        </form>
           </footer>
        </aside>
   )
